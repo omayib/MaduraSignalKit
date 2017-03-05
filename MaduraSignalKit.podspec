@@ -7,9 +7,9 @@
 #
 
 Pod::Spec.new do |s|
-s.name             = 'MaduraCallKit'
+s.name             = 'MaduraSignalKit'
 s.version          = '0.1.0'
-s.summary          = 'Call Engine for maduraSDK'
+s.summary          = 'Signal kit for maduraSDK'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -21,21 +21,16 @@ s.description      = <<-DESC
 TODO: Add long description of the pod here.
 DESC
 
-s.homepage         = 'https://github.com/omayib/MaduraCallKit'
+s.homepage         = 'https://github.com/omayib/MaduraSignalKit'
 # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
 s.license          = { :type => 'MIT', :file => 'LICENSE' }
 s.author           = { 'omayib' => 'omayib@gmail.com' }
-s.source           = { :git => 'https://github.com/omayib/MaduraCallKit.git', :tag => s.version.to_s }
+s.source           = { :git => 'https://github.com/omayib/MaduraSignalKit.git', :tag => s.version.to_s }
 # s.social_media_url = 'https://twitter.com/@omayib'
 
-s.ios.deployment_target = '8.0'
+s.ios.deployment_target = '9.0'
 
-s.source_files = 'MaduraCallKit/**/*'
-s.framework  = 'UIKit', 'AVFoundation', 'CoreMotion', 'CoreTelephony', 'AudioToolbox', 'VideoToolbox', 'Systemconfiguration', 'CoreMedia', 'AgoraRtcEngineKit'
-s.vendored_frameworks   = 'MaduraCallKit/Libs/AgoraRtcEngineKit.framework'
-s.libraries             = "c++", "z"
+s.source_files  = "MaduraSignalKit/**/*.{h,m,swift,xib}"
 
-
-# s.public_header_files = 'Pod/Classes/**/*.h'
-# s.dependency 'AFNetworking', '~> 2.3'
+s.dependency 'SwiftMQTT'
 end

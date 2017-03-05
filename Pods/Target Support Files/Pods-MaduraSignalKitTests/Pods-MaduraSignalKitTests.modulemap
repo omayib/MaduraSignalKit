@@ -1,0 +1,6 @@
+framework module Pods_MaduraSignalKitTests {
+  umbrella header "Pods-MaduraSignalKitTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

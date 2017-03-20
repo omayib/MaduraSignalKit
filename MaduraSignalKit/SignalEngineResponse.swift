@@ -23,11 +23,11 @@ public protocol SignalEngineResponse{
      
      - returns: void
     */
-    func onReceiveInvitation(message:String, from:String)
+    func onReceiveInvitation(message:String, from userId:String)
     func onCalleeIsBussy()
     func onCalleeIsReady()
     //call Event
-    func onReceiveDial()
+    func onReceiveDial(from userId:String)
     func calleeDidWaitingAnswer()
     func callerDidCancel()
     func peopleDidJoin()

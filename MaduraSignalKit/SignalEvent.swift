@@ -26,4 +26,5 @@ public enum UserEvent{
     case invite
     case bussy
     case ready
+    case end
 }

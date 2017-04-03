@@ -12,6 +12,7 @@ enum MqttTopic:String{
     case invitation = "/%@/invitation"
     case bussy = "/%@/bussy"
     case ready = "/%@/ready"
+    case end = "/%@/end"
     //for call session
     case dial = "call/%@/dial"
     case wait = "call/%@/wait"

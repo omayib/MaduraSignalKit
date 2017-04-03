@@ -134,6 +134,7 @@ class MqttSignalEngine: SignalEngineCommand{
         let topicInvitation =  String.init(format:  MqttTopic.invitation.rawValue, userId)
         let topicBussy = String.init(format: MqttTopic.bussy.rawValue, userId)
         let topicReady = String.init(format: MqttTopic.ready.rawValue, userId)
+        let topicEnd = String.init(format: MqttTopic.end.rawValue, userId)
         
         mqttSession?.subscribe(to: topicInvitation, delivering: .atLeastOnce) { (succeeded, error) -> Void in
             if succeeded {
@@ -154,6 +155,14 @@ class MqttSignalEngine: SignalEngineCommand{
         mqttSession?.subscribe(to: topicBussy, delivering: .atLeastOnce) { (succeeded, error) -> Void in
             if succeeded {
                 print("\(topicBussy) : Subscribed!")
+                self.userSessionBussySubscribed = true
+                self.updateUserSessionStatus()
+            }
+        }
+        
+        mqttSession?.subscribe(to: topicEnd, delivering: .atLeastOnce) { (succeeded, error) -> Void in
+            if succeeded {
+                print("\(topicEnd) : Subscribed!")
                 self.userSessionBussySubscribed = true
                 self.updateUserSessionStatus()
             }
@@ -266,6 +275,20 @@ class MqttSignalEngine: SignalEngineCommand{
             
             print("message.. \(message)")
             break
+        case .end:
+            
+            topic =  String.init(format:  MqttTopic.end.rawValue, userSession)
+            print("publish to topic \(topic)")
+            
+            let data = ["event" : "end",
+                        "from": clientId!] as [String : Any]
+            print("message to pubslish : \(data)")
+            
+            message = try! JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
+            
+            print("message.. \(message)")
+            break
+            
         }
         print("message.. \(mqttSession?.clientID)")
         mqttSession?.publish(message, in: topic, delivering: .atLeastOnce, retain: true, completion: { (succeeded, error) in
@@ -425,6 +448,8 @@ extension MqttSignalEngine: MQTTSessionDelegate{
             self.signalResponse?.onCalleeIsBussy()
         }else if topic == ("/\(clientId!)/\(MqttTopic.ready)") {
             self.signalResponse?.onCalleeIsReady()
+        }else if topic == ("/\(clientId!)/\(MqttTopic.end)") {
+            self.signalResponse?.callerDidCancel()
         }else if topic == ("call/\(callSessionId!)/\(MqttTopic.dial)"){
             self.signalResponse?.onReceiveDial(from: fromUserId)
         }else if topic == ("call/\(callSessionId!)/\(MqttTopic.wait)"){
